@@ -9,17 +9,27 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      console.log('Logged in user:', user.displayName, user.email);
-      // Redirect to chat page
-      navigate('/chat');
-    } catch (error) {
-      console.error('Google Login failed:', error.message);
-      // TODO: show user-visible error message
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    // ✅ Restrict to IIT Madras smail domain
+    if (
+      user.email.endsWith("@smail.iitm.ac.in") ||
+      user.email.endsWith("@iitm.ac.in")
+    ) {
+      console.log("✅ Allowed user:", user.displayName, user.email);
+      // 👉 Navigate to main app/dashboard
+      navigate("/chat"); // or your main route
+    } else {
+      alert("Access restricted to @smail.iitm.ac.in users only.");
+      // Optional: Sign out unauthorized user
+      auth.signOut();
     }
-  };
+  } catch (error) {
+    console.error("❌ Google Login failed:", error.message);
+  }
+};
 
   return (
     <div style={{
