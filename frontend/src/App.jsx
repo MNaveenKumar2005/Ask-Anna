@@ -1,16 +1,19 @@
-import React from 'react'
-import './index.css'
-
+// src/App.jsx
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LandingPage from './LandingPage/index';
+import AnnaChatUI from './AnnaChatUI/index';   
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-yellow-200">
-      <h1>
-        Tailwind is Working!
-      </h1>
-      <h1 class="text-red-600 bg-yellow-200 text-3xl">Direct Tailwind Test</h1>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/chat" element={<AnnaChatUI />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
+
 
